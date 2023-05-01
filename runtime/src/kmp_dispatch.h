@@ -598,37 +598,6 @@ static __forceinline double __kmp_get_ticks2() {
   unsigned int dummy;
   return (double)__rdtscp(&dummy) / (double)__kmp_env_cpu_speed;
 }
-
-#if KMP_DEBUG
-/* Debug prints for correctness checks. Comment out else. */
-template <typename T>
-static void print_chunks(int status, T *p_lb, T *p_ub, T tid,
-                         dispatch_private_info_template<T> *pr) {
-  if (status == 1) {
-    T size = 0;
-    if (*p_ub > *p_lb) {
-      size = (*p_ub - *p_lb) + 1;
-    } else if (*p_lb > *p_ub) {
-      size = (*p_lb - *p_ub) + 1;
-    } else if (*p_ub == *p_lb) {
-      size = 1;
-    }
-    pr->u.p.chunks.push_back(size);
-  }
-  if (status == 0) { // prints out all the chunks of current thread
-    T sum = 0;
-    std::stringstream ss;
-    ss << "Thread " << tid << ": My chunks were: ";
-    for (const auto &value : pr->u.p.chunks) {
-      sum += value;
-      ss << "[" << value << "] ";
-    }
-    ss << ". Sum = " << sum << ".\n";
-    std::string s = ss.str();
-    printf("%s", s.c_str());
-  }
-}
-#endif
 //-----------------------LB4OMP_extensions------------------------
 
 /* Computes and returns the number of unassigned iterations after idx chunks

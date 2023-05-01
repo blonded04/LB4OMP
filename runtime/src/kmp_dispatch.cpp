@@ -6383,12 +6383,6 @@ break;
     __kmp_str_free(&buff);
   }
 #endif
-  /* --------------------------LB4OMP_extensions-----------------------------*/
-#if KMP_DEBUG
-  /* Debug prints for correctness checks. Comment out else. */
-  print_chunks(status, p_lb, p_ub, tid, pr);
-#endif
-  /* --------------------------LB4OMP_extensions-----------------------------*/
   if(status == 0){
     LOOP_TIME_MEASURE_END
     // AUTO by Ali
