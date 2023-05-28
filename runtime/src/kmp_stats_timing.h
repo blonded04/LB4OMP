@@ -54,8 +54,6 @@ public:
   };
 
 
-// using Timestamp = std::chrono::system_clock::time_point;
-
 inline uint64_t Now() {
 #if defined(__x86_64__)
   unsigned int dummy;
@@ -75,8 +73,7 @@ inline uint64_t Now() {
   tsc_tick_count()
       : my_count(static_cast<int64_t>(__builtin_readcyclecounter())) {}
 #elif KMP_HAVE___RDTSC
-  unsigned int dummy;
-  tsc_tick_count() : my_count(static_cast<int64_t>(__rdtscp(&dummy))) {}  //use rdtscp instead of rdtsc  AUTO by Ali
+  tsc_tick_count() : my_count(static_cast<int64_t>(Now())) {}  //use rdtscp instead of rdtsc  AUTO by Ali
 #else
 #error Must have high resolution timer defined
 #endif
