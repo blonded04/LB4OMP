@@ -53,6 +53,24 @@ public:
                                       const tsc_tick_count::tsc_interval_t &i0);
   };
 
+
+// using Timestamp = std::chrono::system_clock::time_point;
+
+inline uint64_t Now() {
+#if defined(__x86_64__)
+  unsigned int dummy;
+  return __rdtscp(&dummy);
+ // return __rdtsc();
+#elif defined(__aarch64__)
+  Timestamp val;
+  asm volatile("mrs %0, cntvct_el0" : "=r"(val));
+  return val;
+#else
+#error "Unsupported architecture
+#endif
+}
+
+
 #if KMP_HAVE___BUILTIN_READCYCLECOUNTER
   tsc_tick_count()
       : my_count(static_cast<int64_t>(__builtin_readcyclecounter())) {}
