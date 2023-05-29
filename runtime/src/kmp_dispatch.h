@@ -39,7 +39,9 @@
 /* ----------------------------LB4OMP_extensions------------------------------- */
 //#include <chrono> // for time measurements like in BOLD
 #include <sstream> // for debug only [need to link app with C++ std library]
+#if defined(__x86_64__)
 #include <x86intrin.h> // for time measurements with __rdtscp()
+#endif
 /* ----------------------------LB4OMP_extensions------------------------------- */
 
 /* ------------------------------------------------------------------------ */
