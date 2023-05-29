@@ -18,7 +18,7 @@
 #include <limits>
 #include <stdint.h>
 #include <string>
-#if KMP_HAVE_X86INTRIN_H
+#if KMP_HAVE_X86INTRIN_H && defined(__x86_64__)
 #include <x86intrin.h>
 #endif
 
@@ -33,7 +33,7 @@ public:
 
   public:
     tsc_interval_t() : value(0) {} // Construct 0 time duration
-#if KMP_HAVE_TICK_TIME
+#if KMP_HAVE_TICK_TIME || defined(__aarch64__)
     double seconds() const; // Return the length of a time interval in seconds
 #endif
     double ticks() const { return double(value); }
@@ -85,7 +85,7 @@ inline uint64_t Now() {
   tsc_tick_count earlier(tsc_tick_count const other) const {
     return my_count < other.my_count ? (*this) : other;
   }
-#if KMP_HAVE_TICK_TIME
+#if KMP_HAVE_TICK_TIME || defined(__aarch64__)
   static double tick_time(); // returns seconds per cycle (period) of clock
 #endif
   static tsc_tick_count now() {
@@ -173,7 +173,7 @@ operator+=(tsc_tick_count::tsc_interval_t &i1,
   return i1;
 }
 
-#if KMP_HAVE_TICK_TIME
+#if KMP_HAVE_TICK_TIME || defined(__aarch64__)
 inline double tsc_tick_count::tsc_interval_t::seconds() const {
   return value * tick_time();
 }

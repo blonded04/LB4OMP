@@ -24,8 +24,8 @@
 using namespace std;
 
 /* moved to kmp_stats_timing.h ...needs this definition there to enable using the timing without haveing to enable stats// by Ali
-#if KMP_HAVE_TICK_TIME
-#if KMP_MIC
+#if KMP_HAVE_TICK_TIME || defined(__aarch64__)
+#if KMP_MIC || defined(__aarch64__)
 double tsc_tick_count::tick_time() {
   // pretty bad assumption of 1GHz clock for MIC
   return 1 / ((double)1000 * 1.e6);

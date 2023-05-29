@@ -916,7 +916,7 @@ typedef void (*microtask_t)(int *gtid, int *npr, ...);
 // Enable tick time conversion of ticks to seconds
 //#if KMP_STATS_ENABLED // by Ali ...always make tick time available
 #define KMP_HAVE_TICK_TIME                                                     \
-  (KMP_OS_LINUX && (KMP_MIC || KMP_ARCH_X86 || KMP_ARCH_X86_64))
+  (KMP_OS_LINUX && (KMP_MIC || KMP_ARCH_X86 || KMP_ARCH_X86_64 || defined(__aarch64__)))
 //#endif //by Ali
 
 // Warning levels
