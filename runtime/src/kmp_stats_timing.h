@@ -60,7 +60,7 @@ inline uint64_t Now() {
   return __rdtscp(&dummy);
  // return __rdtsc();
 #elif defined(__aarch64__)
-  Timestamp val;
+  uint64_t val;
   asm volatile("mrs %0, cntvct_el0" : "=r"(val));
   return val;
 #else

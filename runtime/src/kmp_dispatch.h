@@ -591,14 +591,31 @@ static __forceinline long double __kmp_pow(long double x, UT y) {
     return ns;
 }*/
 
+
 // Get ticks of current time divided by CPU speed [=microseconds].
 static __forceinline kmp_uint64 __kmp_get_ticks() {
+#if defined(__x86_64__)
   unsigned int dummy;
   return __rdtscp(&dummy) / __kmp_env_cpu_speed;
+#elif defined(__aarch64__)
+  uint64_t val;
+  asm volatile("mrs %0, cntvct_el0" : "=r"(val));
+  return val / __kmp_env_cpu_speed;
+#else
+#error "Unsupported architecture
+#endif
 }
 static __forceinline double __kmp_get_ticks2() {
+#if defined(__x86_64__)
   unsigned int dummy;
   return (double)__rdtscp(&dummy) / (double)__kmp_env_cpu_speed;
+#elif defined(__aarch64__)
+  uint64_t val;
+  asm volatile("mrs %0, cntvct_el0" : "=r"(val));
+  return (double)val /(double)__kmp_env_cpu_speed;
+#else
+#error "Unsupported architecture
+#endif
 }
 //-----------------------LB4OMP_extensions------------------------
 
