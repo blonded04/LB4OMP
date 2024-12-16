@@ -1,13 +1,10 @@
-if (${OPENMP_STANDALONE_BUILD})
-  # From HandleLLVMOptions.cmake
-  function(append_if condition value)
-    if (${condition})
-      foreach(variable ${ARGN})
-        set(${variable} "${${variable}} ${value}" PARENT_SCOPE)
-      endforeach(variable)
-    endif()
-  endfunction()
-endif()
+function(append_if condition value)
+  if (${condition})
+    foreach(variable ${ARGN})
+      set(${variable} "${${variable}} ${value}" PARENT_SCOPE)
+    endforeach(variable)
+  endif()
+endfunction(
 
 if (${OPENMP_ENABLE_WERROR})
   append_if(OPENMP_HAVE_WERROR_FLAG "-Werror" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
