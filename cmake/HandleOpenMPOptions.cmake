@@ -4,7 +4,7 @@ function(append_if condition value)
       set(${variable} "${${variable}} ${value}" PARENT_SCOPE)
     endforeach(variable)
   endif()
-endfunction(
+endfunction()
 
 if (${OPENMP_ENABLE_WERROR})
   append_if(OPENMP_HAVE_WERROR_FLAG "-Werror" CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
